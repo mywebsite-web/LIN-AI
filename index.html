@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIN AI - Home</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --bg-color: #f5f7fa;
+            --text-color: #333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        /* Navigation Bar */
+        .main-nav {
+            background-color: #ffffff;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 1000;
+            position: relative;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a:not(.school-home-btn) {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+
+        .nav-links a:not(.school-home-btn):hover {
+            color: var(--primary-color);
+            background-color: #f0f7ff;
+        }
+
+        .nav-links a:not(.school-home-btn).active {
+            color: var(--primary-color);
+            background-color: #e6f2ff;
+        }
+        
+        .school-home-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #357abd 100%);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .school-home-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+            filter: brightness(1.1);
+        }
+        
+        .school-home-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+            z-index: 1001;
+        }
+
+        /* Hero Section */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #eef6fd 100%);
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+            background-color: #357abd;
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #f0f7ff;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Visual - Mock Chat */
+        .hero-visual {
+            width: 100%;
+            max-width: 500px;
+            perspective: 1000px;
+        }
+
+        .mock-chat {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transform: rotateX(5deg) translateY(0);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .mock-chat:hover {
+            transform: rotateX(0) translateY(-5px);
+        }
+
+        .mock-msg {
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            max-width: 80%;
+            line-height: 1.4;
+        }
+
+        .mock-msg.user {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .mock-msg.ai {
+            align-self: flex-start;
+            background-color: #f1f0f0;
+            color: #333;
+            border-bottom-left-radius: 2px;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .learn-more {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .learn-more h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .learn-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .learn-card h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .learn-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .main-nav {
+                padding: 0 20px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 280px;
+                background: white;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 25px 30px;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                gap: 20px;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links a {
+                width: 100%;
+                font-size: 1.1rem;
+                padding: 10px 0;
+                border-bottom: 1px solid #eee;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="main-nav">
+    <a href="index.html" class="nav-logo">
+        <span>🎓</span> LIN AI
+    </a>
+    <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+    <div class="nav-links" id="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="ai-tutor.html">AI Tutor</a>
+        <a href="#">Resources</a>
+        <a href="#">About</a>
+        <a href="https://mywebsite-web.github.io/Linguistics-P/" class="school-home-btn">🏫 Back to School Home</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>Welcome to LIN AI</h1>
+    <p>Your intelligent companion for academic excellence. Get personalized tutoring, study resources, and instant answers to your questions.</p>
+    <div class="cta-buttons">
+        <a href="ai-tutor.html" class="btn btn-primary">Start Tutoring</a>
+        <a href="#learn-more" class="btn btn-secondary">Learn More</a>
+    </div>
+    
+    <div class="hero-visual">
+        <div class="mock-chat">
+            <div class="mock-msg user">Help me solve this math problem! 📐</div>
+            <div class="mock-msg ai">Sure! I'd love to help. What problem are you working on? 🎓</div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Tutor</h3>
+        <p>Get 24/7 assistance with your studies. Our AI tutor is designed to help you understand complex concepts.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>Smart Resources</h3>
+        <p>Access a curated library of educational materials tailored to your learning path.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Progress Tracking</h3>
+        <p>Monitor your learning journey and see how you improve over time.</p>
+    </div>
+</section>
+
+<section id="learn-more" class="learn-more">
+    <h2>Learn More</h2>
+    <div class="learn-grid">
+        <div class="learn-card">
+            <h3>What is LIN AI?</h3>
+            <p>LIN AI is your study companion. It provides clear explanations, step-by-step guidance, and tailored support across subjects to help you learn faster.</p>
+        </div>
+        <div class="learn-card">
+            <h3>How It Works</h3>
+            <p>Start a session in the AI Tutor, ask questions, and receive instant, structured answers. Your sessions are saved locally so you can revisit them anytime.</p>
+        </div>
+        <div class="learn-card">
+            <h3>Privacy & Data</h3>
+            <p>Your chat history is stored in your browser on your device. You can export or import sessions from the AI Tutor sidebar for backup or transfer.</p>
+        </div>
+        <div class="learn-card">
+            <h3>Get Started</h3>
+            <p>Click “Start Tutoring” to begin a new chat. Use the history panel to switch sessions and the clear button to reset the current conversation.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2025 LIN AI. Created by Abdulsalam Dev.</p>
+</footer>
+
+<script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.getElementById('nav-links');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        mobileMenuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target) && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            mobileMenuBtn.textContent = '☰';
+        }
+    });
+</script>
+
+</body>
+</html>
