@@ -5,7 +5,7 @@ import json
 import sys
 import os
 
-PORT = 8000
+PORT = int(os.environ.get("PORT", "8000"))
 HF_API_URL = "https://router.huggingface.co/v1/chat/completions"
 HF_TOKEN = os.environ.get("HF_TOKEN", "")
 
