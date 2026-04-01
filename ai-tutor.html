@@ -900,7 +900,8 @@
         thinkingIndicator.style.display = 'block';
 
         // Prepare Prompt for OpenAI Compatible Endpoint
-        const model = "google/gemma-2-2b-it";
+        // Use a chat model supported by the current Hugging Face router token
+        const model = "Qwen/Qwen3.5-27B";
         
         const session = sessions.find(s => s.id === currentSessionId);
         const currentMessages = session ? session.messages : [];
@@ -908,7 +909,7 @@
         // Construct conversation history for context
         const historyContext = currentMessages
             .filter(m => !m.isError)
-            .slice(-20) // Increased context window
+            .slice(-10) // Smaller context window for faster responses
             .map(m => ({
                 role: m.sender === 'user' ? 'user' : 'assistant',
                 content: m.text
@@ -930,7 +931,7 @@
                 body: JSON.stringify({
                     model: model,
                     messages: apiMessages,
-                    max_tokens: 500,
+                    max_tokens: 200,
                     temperature: 0.7,
                     top_p: 0.9
                 })

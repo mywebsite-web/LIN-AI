@@ -10,6 +10,24 @@ HF_API_URL = "https://router.huggingface.co/v1/chat/completions"
 HF_TOKEN = os.environ.get("HF_TOKEN", "")
 
 class ProxyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+    def send_cors_headers(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.send_cors_headers()
+        self.end_headers()
+
+    def do_GET(self):
+        if self.path == '/favicon.ico':
+            self.send_response(204)
+            self.send_header('Content-Length', '0')
+            self.end_headers()
+        else:
+            super().do_GET()
+
     def do_POST(self):
         if self.path == '/chat':
             content_length = int(self.headers['Content-Length'])
